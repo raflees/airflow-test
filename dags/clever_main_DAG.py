@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta
+
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
 
+from scripts.clever_main_pipeline import upload_to_postgres
+
 default_args = {
-    "owner": "alec.ventura",
+    "owner": "rafael.lucena",
     "start_date": datetime(2024, 10, 1),
 }
 
@@ -15,7 +18,6 @@ datasets = [
     'fmcsa_companies.csv',
     'customer_reviews_google.csv',
     'company_profiles_google_maps.csv'
-
 ]
 
 with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_interval='20 0 * * *', max_active_runs=1) as dag:
@@ -31,7 +33,7 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
             task_id=task_id,
             python_callable=upload_to_postgres,
             dag=dag,
-            execution_timeout=timedelta(milliseconds=2),
+            execution_timeout=timedelta(seconds=30),
             op_kwargs={
                 "file_name": file
             }
