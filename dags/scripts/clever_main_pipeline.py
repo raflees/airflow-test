@@ -1,6 +1,6 @@
 import pandas as pd
 
-from scripts.postgres_helper import upload_overwrite_table
+from scripts.postgres_helper import PostgresHelper
 
 def upload_to_postgres(**kwargs):
     file_name=kwargs.get('file_name')
@@ -11,4 +11,6 @@ def upload_to_postgres(**kwargs):
         escapechar="\\",
     )
 
-    upload_overwrite_table(raw_df, table_name)
+    helper = PostgresHelper()
+    helper.create_raw_schema_if_not_exists()
+    helper.upload_overwrite_table(raw_df, table_name)
