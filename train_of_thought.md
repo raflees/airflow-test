@@ -13,6 +13,18 @@
 2. Encapsulated global code in functions
 3. Removed binary / temporary files and added them to .gitignore
 
-**Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. you guys may wanna delete any public records so what I did is not easily accessible by other candidates
+**Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. You guys may wanna delete any public records so what I did is not easily accessible by other candidates
 
-## Step 2: Creating a transform pipeline (PR #2)
+## Step 2: Changing the loaded schema to `raw` (PR #2)
+
+### Reason
+
+Raw data is usually loaded to a Data Lake, or some sort of staging schema before cleasing and feature engineering.
+
+### Rationale
+
+The `raw` schema could have been created during the initialization of the environment (`docker compose up`), but that would create a dependency between the main DAG and the environment initialization. Instead, I decided to create the schema if it didn't exist already, when the data was loaded
+
+### Rafactoring
+
+- The postgres_helper module started becoming too big, so I made it into a class
