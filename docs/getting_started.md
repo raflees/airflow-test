@@ -17,8 +17,8 @@
     ``` 
         Host name/address:  postgres_clever 
         port:  5432
-        Username:  clever 
-        Password:  clever 
+        Username:  clever
+        Password:  clever
 
 4. To actually run the pipeline, go to Airflow, click at **clever_main_DAG** and enable it. If after a couple minutes it does not start, manual start the pipeline (click at top right 'play' button).
 
