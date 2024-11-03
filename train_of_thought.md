@@ -1,6 +1,6 @@
 # Train of thought to get this to work
 
-## Step 1: Getting everything working
+## Step 1: Getting everything working (PR #1)
 
 ### Issues found and fixed
 1. Timeout of the DAG was set to 2 miliseconds, adjusted it to 30 seconds, as runs weren't taking more than 6 seconds
@@ -11,3 +11,8 @@
 ### Cleanups / refactoring
 1. Comformed some script import statements to PEP-8
 2. Encapsulated global code in functions
+3. Removed binary / temporary files and added them to .gitignore
+
+**Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. you guys may wanna delete any public records so what I did is not easily accessible by other candidates
+
+## Step 2: Creating a transform pipeline (PR #2)
