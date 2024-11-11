@@ -15,7 +15,7 @@
 
 **Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. You guys may wanna delete any public records so what I did is not easily accessible by other candidates
 
-## Step 2: Changing the loaded schema to `raw` (PR #3)
+## Step 2: Changing the loaded schema to `raw` (PR #3)gi
 
 ### Reason
 
@@ -50,3 +50,7 @@ Two major operations can be employed with the raw data: unnesting and typing
 - Materialization
 - Pivoting
 - Renaming
+
+## Refactoring
+
+- Created a small DAG factory
