@@ -7,8 +7,8 @@ sentiment = SentimentIntensityAnalyzer()
 helper = PostgresHelper()
 
 def load_postgres_reviews_table() -> pd.DataFrame:
-    engine = helper.create_pg_engine()
-    return pd.read_sql('select id, author_id, place_id, review_text from transform.customer_reviews_google', con=engine)
+    query = 'select id, author_id, place_id, review_text from transform.customer_reviews_google'
+    return pd.read_sql(query, con=helper.engine)
 
 def analyze_text(text: str) -> dict:
     if not text:
@@ -37,5 +37,5 @@ def sentiment_analysis():
     )
 
     df_join = df_join[["review_id", "negative_score", "neutral_score", "positive_score", "sentiment_polarity"]]
-
+    helper.create_schema_if_not_exists("analysis")
     helper.upload_overwrite_table(df_join, "reviews_sentiment_analysis", "analysis")

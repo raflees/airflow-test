@@ -14,10 +14,10 @@ class PostgresHelper:
         )
         return engine
 
-    def create_raw_schema_if_not_exists(self):
+    def create_schema_if_not_exists(self, schema):
         with self.engine.connect() as conn:
-            if not self.engine.dialect.has_schema(conn, "raw"):
-                conn.execute(CreateSchema("raw"))
+            if not self.engine.dialect.has_schema(conn, schema):
+                conn.execute(CreateSchema(schema))
 
     def upload_overwrite_table(self, df, table_name, schema="raw"):
         # Upload DataFrame to PostgreSQL
