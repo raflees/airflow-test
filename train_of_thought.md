@@ -28,3 +28,25 @@ The `raw` schema could have been created during the initialization of the enviro
 ### Refactoring
 
 - The postgres_helper module started becoming too big, so I made it into a class
+
+## Step 3: Creating a transform pipeline with DBT (PR #3)
+
+### Reason
+
+DBT is a great tool for transforming data. It creates an "audit" trail, but encouraging the breakdown of transformations in small steps, each generating a model (VIEW or TABLE). It is also very readable and developer friendly, as most people in the field have knowledge of SQL.
+
+Below is a list of transformations applied through a DBT pipeline
+
+## Rationale
+
+Two major operations can be employed with the raw data: unnesting and typing
+
+**Unnesting** means extracting data from an unstructured format into a tabular format
+**Typing** is changing the data types to conform to relational database types
+
+### Other Operations
+- Depedency installation
+- Indexing
+- Materialization
+- Pivoting
+- Renaming
