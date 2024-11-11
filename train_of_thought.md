@@ -15,7 +15,7 @@
 
 **Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. You guys may wanna delete any public records so what I did is not easily accessible by other candidates
 
-## Step 2: Changing the loaded schema to `raw` (PR #2)
+## Step 2: Changing the loaded schema to `raw` (PR #3)
 
 ### Reason
 
@@ -29,7 +29,7 @@ The `raw` schema could have been created during the initialization of the enviro
 
 - The postgres_helper module started becoming too big, so I made it into a class
 
-## Step 3: Creating a transform pipeline with DBT (PR #3)
+## Step 3: Creating a transform pipeline with DBT (PR #4)
 
 ### Reason
 
