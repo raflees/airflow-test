@@ -5,7 +5,7 @@ from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 
-from scripts.clever_main_pipeline import upload_to_postgres
+from scripts.dag_factory import DAGFactory
 
 default_args = {
     "owner": "rafael.lucena",
@@ -22,36 +22,18 @@ datasets = [
 ]
 
 with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_interval='20 0 * * *', max_active_runs=1) as dag:
-
     start_task = EmptyOperator(task_id='Start', dag=dag)
     finish_task = EmptyOperator(task_id='Finish', dag=dag)
 
-    transform_task = BashOperator(
-        task_id="transform_task",
-        dag=dag,
-        # bash_command="cd $AIRFLOW_HOME/dags/clever_transform && dbt deps && dbt run --selector main",
-        bash_command="""
-            cd $AIRFLOW_HOME/dags/clever_transform &&
-            pip install -r requirements.txt &&
-            dbt deps &&
-            dbt run --selector main --target prod"""
-    )
+    factory = DAGFactory(dag)
+    transform_task = factory.create_transform_task("clever_transform")
 
-    for file in datasets:
-        file_without_extension = file.split('.')[0]
-
-        task_id = f"upload_to_postgres_{file_without_extension}"
-        upload_to_postgres_task = PythonOperator(
-            task_id=task_id,
-            python_callable=upload_to_postgres,
-            dag=dag,
-            execution_timeout=timedelta(seconds=30),
-            op_kwargs={
-                "file_name": file
-            }
-        )
-
-        start_task.set_downstream(upload_to_postgres_task)    
-        upload_to_postgres_task.set_downstream(transform_task)
+    for file_name in datasets:
+        file_without_extension = file_name.split('.')[0]
+        upload_task = factory.create_upload_tasks(
+            task_id=f"upload_to_postgres_{file_without_extension}",
+            file_name=file_name)
+        start_task.set_downstream(upload_task)    
+        upload_task.set_downstream(transform_task)
     
     transform_task.set_downstream(finish_task)
