@@ -1,0 +1,10 @@
+selectors:
+  - name: main
+    definition:
+      union:
+        - +company_profiles_google_maps
+        - +customer_reviews_google
+        - +fmcsa_companies
+        - +fmcsa_company_snapshot
+        - +fmcsa_complaints
+        - +fmcsa_safer_data
