@@ -1,0 +1,12 @@
+clever_transform:
+  outputs:
+    dev:
+      dbname: clever
+      host: localhost
+      pass: clever
+      port: 5433
+      schema: raw
+      threads: 8
+      type: postgres
+      user: clever
+  target: dev
