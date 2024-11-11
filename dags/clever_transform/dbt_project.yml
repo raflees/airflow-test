@@ -15,6 +15,5 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  clever_transform:
-    +materialized: table
-    +schema: transform
+  +materialized: table
+  +schema: transform
