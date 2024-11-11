@@ -27,7 +27,6 @@ class DAGFactory:
             dag=self.dag,
             bash_command="""
                 cd $AIRFLOW_HOME/dags/clever_transform &&
-                pip install -r requirements.txt &&
                 dbt deps &&
                 dbt run --selector main --target prod"""
         )
