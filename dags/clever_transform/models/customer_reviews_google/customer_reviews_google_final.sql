@@ -27,5 +27,5 @@ SELECT
     review_questions,
     review_rating,
     review_text,
-    review_timestamp
+    TO_TIMESTAMP(review_timestamp::NUMERIC) AS review_timestamp
 FROM {{ ref('customer_reviews_google_typed') }}

@@ -4,7 +4,7 @@
 
 SELECT
     about::JSON AS about,  -- TO UNNEST
-    area_service::TEXT AS area_service,
+    area_service::TEXT AS has_area_service,
     booking_appointment_link::TEXT AS booking_appointment_link,
     borough::TEXT AS borough,
     business_status::TEXT AS business_status,

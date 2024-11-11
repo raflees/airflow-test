@@ -7,7 +7,6 @@
 ) }}
 
 SELECT
-    area_service,
     booking_appointment_link,
     borough,
     business_status,
@@ -19,6 +18,7 @@ SELECT
     description,
     full_address,
     google_id,
+    has_area_service,
     latitude,
     located_google_id,
     located_in,
