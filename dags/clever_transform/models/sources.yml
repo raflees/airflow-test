@@ -1,0 +1,11 @@
+version: 2
+sources:
+  - name: clever_raw
+    schema: raw
+    tables:
+      - name: company_profiles_google_maps
+      - name: customer_reviews_google
+      - name: fmcsa_safer_data
+      - name: fmcsa_company_snapshot
+      - name: fmcsa_complaints
+      - name: fmcsa_companies
