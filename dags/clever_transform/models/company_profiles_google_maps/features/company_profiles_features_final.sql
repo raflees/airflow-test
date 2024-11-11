@@ -1,6 +1,5 @@
 {{ config(
 	alias='company_profiles_features',
-	materialized='table',
 	indexes=[
         {'columns': ['place_id', 'category', 'feature'], 'type': 'btree'},
     ]

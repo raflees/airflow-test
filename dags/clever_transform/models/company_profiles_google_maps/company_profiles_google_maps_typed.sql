@@ -1,7 +1,3 @@
-{{ config(
-    materialized='table'
-) }}
-
 SELECT
     about::JSON AS about,  -- TO UNNEST
     area_service::TEXT AS has_area_service,

@@ -1,7 +1,3 @@
-{{ config(
-    materialized='table'
-) }}
-
 SELECT
     google_id::TEXT,
     review_id::TEXT AS id,

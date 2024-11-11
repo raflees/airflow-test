@@ -1,6 +1,5 @@
 {{ config(
     alias='company_profiles_working_hours',
-    materialized='table',
     indexes=[
         {'columns': ['place_id'], 'type': 'btree'}
     ]

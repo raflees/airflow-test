@@ -1,6 +1,5 @@
 {{ config(
     alias='fmcsa_company_snapshot',
-    materialized='table',
     indexes=[
         {'columns': ['id'], 'type': 'btree'},
     ]

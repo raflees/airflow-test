@@ -1,7 +1,6 @@
 {{ config(
     alias='company_profiles_other_hours',
     pre_hook="CREATE EXTENSION IF NOT EXISTS tablefunc;",
-    materialized='table',
     indexes=[
         {'columns': ['place_id', 'hours_type'], 'type': 'btree'}
     ]

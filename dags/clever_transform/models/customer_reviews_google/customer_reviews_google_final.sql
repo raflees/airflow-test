@@ -1,6 +1,5 @@
 {{ config(
     alias='customer_reviews_google',
-    materialized='table',
     indexes=[
         {'columns': ['place_id', 'id'], 'type': 'btree'},
     ]

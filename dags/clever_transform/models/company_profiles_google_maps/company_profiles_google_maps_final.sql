@@ -1,6 +1,5 @@
 {{ config(
     alias='company_profiles_google_maps',
-    materialized='table',
     indexes=[
         {'columns': ['place_id'], 'type': 'btree'}
     ]

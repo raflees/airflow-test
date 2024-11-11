@@ -1,6 +1,5 @@
 {{ config(
     alias='fmcsa_complaints',
-    materialized='table',
     indexes=[
         {'columns': ['id', 'company_id'], 'type': 'btree'},
     ]

@@ -1,3 +1,7 @@
+{{ config(
+	materialized='view'
+) }}
+
 SELECT
     place_id,
     other_hours_record.key AS hours_type,

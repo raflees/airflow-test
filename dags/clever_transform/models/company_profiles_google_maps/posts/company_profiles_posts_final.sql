@@ -1,6 +1,5 @@
 {{ config(
 	alias='company_profiles_posts',
-    materialized='table',
 	indexes=[
         {'columns': ['place_id', 'post_link'], 'type': 'btree'}
     ]

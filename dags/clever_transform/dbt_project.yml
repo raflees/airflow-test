@@ -16,5 +16,5 @@ clean-targets:
 
 models:
   clever_transform:
-    +materialized: view
+    +materialized: table
     +schema: transform

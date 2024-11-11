@@ -1,3 +1,7 @@
+{{ config(
+	materialized='view'
+) }}
+
 SELECT
     place_id,
     TRIM(working_hours ->> 'Monday', '""') AS monday,

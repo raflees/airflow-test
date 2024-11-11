@@ -1,3 +1,7 @@
+{{ config(
+	materialized='view'
+) }}
+
 SELECT
 	place_id,
 	posts_item.value ->> 'body' AS body,

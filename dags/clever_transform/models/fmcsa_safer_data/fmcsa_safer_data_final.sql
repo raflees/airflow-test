@@ -1,6 +1,5 @@
 {{ config(
     alias='fmcsa_safer_data',
-    materialized='table',
     indexes=[
         {'columns': ['company_id'], 'type': 'btree'},
     ]

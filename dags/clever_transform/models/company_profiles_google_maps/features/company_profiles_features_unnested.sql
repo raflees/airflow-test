@@ -1,3 +1,7 @@
+{{ config(
+	materialized='view'
+) }}
+
 SELECT
 	place_id,
 	t1.key AS category,
