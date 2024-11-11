@@ -2,8 +2,7 @@
 	alias='company_profiles_features',
 	materialized='table',
 	indexes=[
-        {'columns': ['place_id'], 'type': 'btree'},
-		{'columns': ['feature'], 'type': 'btree'}
+        {'columns': ['place_id', 'category', 'feature'], 'type': 'btree'},
     ]
 ) }}
 
