@@ -21,3 +21,6 @@ with DAG("clever_review_sentiment_DAG", default_args=default_args, catchup=False
         dag=dag,
         execution_timeout=timedelta(seconds=30),
     )
+
+    start_task.set_downstream(review_sentiment_task)
+    review_sentiment_task.set_downstream(finish_task)
