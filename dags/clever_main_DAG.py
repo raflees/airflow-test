@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 
 from scripts.clever_main_pipeline import upload_to_postgres
 
@@ -25,6 +26,17 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
     start_task = EmptyOperator(task_id='Start', dag=dag)
     finish_task = EmptyOperator(task_id='Finish', dag=dag)
 
+    transform_task = BashOperator(
+        task_id="transform_task",
+        dag=dag,
+        # bash_command="cd $AIRFLOW_HOME/dags/clever_transform && dbt deps && dbt run --selector main",
+        bash_command="""
+            cd $AIRFLOW_HOME/dags/clever_transform &&
+            pip install -r requirements.txt &&
+            dbt deps &&
+            dbt run --selector main --target prod"""
+    )
+
     for file in datasets:
         file_without_extension = file.split('.')[0]
 
@@ -39,5 +51,7 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
             }
         )
 
-        start_task.set_downstream(upload_to_postgres_task)
-        upload_to_postgres_task.set_downstream(finish_task)
+        start_task.set_downstream(upload_to_postgres_task)    
+        upload_to_postgres_task.set_downstream(transform_task)
+    
+    transform_task.set_downstream(finish_task)

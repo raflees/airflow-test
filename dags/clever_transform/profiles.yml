@@ -9,4 +9,13 @@ clever_transform:
       threads: 8
       type: postgres
       user: clever
+    prod:
+      dbname: clever
+      host: postgres_clever
+      pass: clever
+      port: 5432
+      schema: raw
+      threads: 8
+      type: postgres
+      user: clever
   target: dev
