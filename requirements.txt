@@ -1,6 +1,5 @@
 apache-airflow-providers-apache-kafka
 kafka-python
-pyspark
 pyhive
 psycopg2-binary
 celery
@@ -12,3 +11,4 @@ fastparquet
 great_expectations
 dbt-core
 dbt-postgres
+vaderSentiment
