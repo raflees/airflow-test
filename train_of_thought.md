@@ -130,9 +130,9 @@ Ranks were created globally (using the whole datasets). If necessary, one can ap
 
 ### Refactoring
 
-- Sentiment Analysis added a field, `stringest_sentiment`, to table as to aid in ranking most negative and positve reviews
+- Sentiment Analysis added a field, `strongest_sentiment`, to table as to aid in ranking most negative and positve reviews
 
-## Prepare system to be reproductible
+## Prepare system to be reproductible (PR #10)
 
 ### Reason
 
