@@ -10,6 +10,7 @@ class VaderSentimentAnalyst:
         self.helper = PostgresHelper()
         self.analysis_schema = 'analysis'
         self.analysis_table = 'reviews_sentiment_analysis'
+        self.method = "append"
     
     def sentiment_analysis(self):
         df = self._load_unanalyzed_reviews()
@@ -23,6 +24,10 @@ class VaderSentimentAnalyst:
         print(f"Analysed {sa_results.shape[0]} reviews")
 
         df_join = df.join(sa_results)
+        df_join["strongest_sentiment"] = df_join.apply(
+            self._select_strongest_sentiment,
+            axis=1,
+        )
         df_join.rename(columns={
             "neg": "negative_score",
             "neu": "neutral_score",
@@ -33,13 +38,21 @@ class VaderSentimentAnalyst:
             inplace=True
         )
 
-        df_join = df_join[["review_id", "negative_score", "neutral_score", "positive_score", "sentiment_polarity"]]
+        df_join = df_join[[
+            "review_id",
+            "negative_score",
+            "neutral_score",
+            "positive_score",
+            "sentiment_polarity",
+            "strongest_sentiment",
+        ]]
+
         self.helper.create_schema_if_not_exists("analysis")
         self.helper.upload_table(
             df=df_join,
             schema=self.analysis_schema,
             table_name=self.analysis_table,
-            method="append")
+            method=self.method)
 
     def _load_unanalyzed_reviews(self) -> pd.DataFrame:
         query = self._get_unanalyzed_reviews_query()
@@ -51,6 +64,7 @@ class VaderSentimentAnalyst:
             return self._unanalysed_reviews_query_incremental()
         else:
             print("No existing sentiment results. Recreating table")
+            self.method = "replace"
             return self._all_reviews_query()
 
     def _sentiment_results_exists(self):
@@ -72,3 +86,9 @@ class VaderSentimentAnalyst:
             return ""
         result = self.model.polarity_scores(text)
         return result
+
+    def _select_strongest_sentiment(self, row):
+        if row["compound"] >= 0:
+            return "positive"
+        if row["compound"] < 0:  # Don't use else as we have NaN values
+            return "negative"

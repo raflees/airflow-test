@@ -7,9 +7,6 @@ SELECT
     location::TEXT,
     company_name::TEXT AS name,
     state::TEXT,
-    total_complaints_2021::NUMERIC,
-    total_complaints_2022::NUMERIC,
-    total_complaints_2023::NUMERIC,
     usdot_num::NUMERIC AS id,
     user_created::TEXT AS created_by,
     user_updated::TEXT AS updated_by

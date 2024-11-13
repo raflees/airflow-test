@@ -15,9 +15,10 @@ SELECT
     location,
     name,
     state,
-    total_complaints_2021,
-    total_complaints_2022,
-    total_complaints_2023,
+    total_complaints AS total_complaints_latest_year,
+    total_complaints_in_year_ranking AS total_complaints_ranking_latest_year,
     updated_at,
     updated_by
-FROM {{ ref('fmcsa_companies_typed') }}
+FROM {{ ref('fmcsa_companies_typed') }} comps
+JOIN {{ ref('fmcsa_companies_ranked') }} rnk
+    ON rnk.company_id = comps.id AND rnk.is_latest_ranking
