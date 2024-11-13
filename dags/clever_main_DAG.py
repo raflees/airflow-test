@@ -26,7 +26,9 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
     finish_task = EmptyOperator(task_id='Finish', dag=dag)
 
     factory = DAGFactory(dag)
-    transform_task = factory.create_transform_task("clever_transform")
+    transform_task = factory.create_dbt_task("dbt_transform", "run", "main_transform")
+    test_task = factory.create_dbt_task("dbt_test", "test", "main_transform")
+    publish_task = factory.create_dbt_task("dbt_publish", "run", "publish")
 
     for file_name in datasets:
         file_without_extension = file_name.split('.')[0]
@@ -36,4 +38,6 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
         start_task.set_downstream(upload_task)    
         upload_task.set_downstream(transform_task)
     
-    transform_task.set_downstream(finish_task)
+    transform_task.set_downstream(test_task)
+    test_task.set_downstream(publish_task)
+    publish_task.set_downstream(finish_task)
