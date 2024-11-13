@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: fmcsa_safer_data_final
+    columns:
+      - name: company_id
+        description: "PK"
+        tests:
+          - unique
+          - not_null

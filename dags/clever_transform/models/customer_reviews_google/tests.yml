@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: customer_reviews_google_final
+    columns:
+      - name: id
+        description: "PK"
+        tests:
+          - unique
+          - not_null
