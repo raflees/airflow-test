@@ -7,7 +7,6 @@ from airflow.operators.bash import BashOperator
 
 from scripts.dag_factory import DAGFactory
 
-
 default_args = {
     "owner": "rafael.lucena",
     "start_date": datetime(2024, 10, 1),
