@@ -21,4 +21,4 @@ SELECT
     updated_by
 FROM {{ ref('fmcsa_companies_typed') }} comps
 JOIN {{ ref('fmcsa_companies_ranked') }} rnk
-    ON comps.id = rnk.company_id AND comps.is_latest_ranking
+    ON rnk.company_id = comps.id AND rnk.is_latest_ranking

@@ -120,3 +120,5 @@ Ranks were created globally (using the whole datasets). If necessary, one can ap
 - Ranked FMCSA companies by the number of complaints, being the 1st companies the one with the least complaints. The ranking was yearly, so I created a `is_latest_ranking` fields which is `TRUE` only for the latest year (in this case, 2023)
     - There are discrepancies between the number of complaints in `fmcsa_companies` and `fmcsa_complaints`. Like only centain complaint categories are account for in the former. For the ranking, I've used `fmcsa_complaints` as the number is always equal or higher.
     - Given the discrepancy, I've removed complaint count fields from `fmcsa_companies`, to not cause confusion
+    - So to not pollute the table, only the ranking from the latest year is published.
+    
