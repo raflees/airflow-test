@@ -74,3 +74,17 @@ For simplicity, and since it's not part of the job requirements, the model was n
 ### Refactoring
 
 - Changed some method signatures in `PostgresHelper` so it can accomodate the new use case
+
+## Create publish and test steps
+
+### Reason
+
+In data pipelines, it's often a good practice to test new data before releasing. This can be accomplished by creating two layers: data to be published and published data. Tests are performed in between them.
+
+### Rationale
+
+We can consider the pipeline built up until this point as to be published data. Therefore, I created a publish layer, populated with tables in the `publish` and DBT tests for PKs and FKs. Then, the DAG was updated to run these three steps in sequence: 1st layer transform, tests and 2nd layer transform. This way if any tests fail, we don't publish bad data.
+
+### Refactoring
+
+- Changed the way we build dbt tasks in the DAG Factory to make it more generic
