@@ -13,4 +13,4 @@ def upload_to_postgres(**kwargs):
 
     helper = PostgresHelper()
     helper.create_schema_if_not_exists("raw")
-    helper.upload_overwrite_table(raw_df, table_name)
+    helper.upload_append_table(raw_df, table_name)
