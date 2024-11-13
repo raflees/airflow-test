@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: company_profiles_google_maps_final
+    columns:
+      - name: place_id
+        description: "PK"
+        tests:
+          - unique
+          - not_null
+  - name: company_profiles_features_final
+    columns:
+      - name: place_id
+        description: "FK"
+        tests:
+          - relationships:
+              to: ref('company_profiles_google_maps_final')
+              field: place_id
+  - name: company_profiles_other_hours_final
+    columns:
+      - name: place_id
+        description: "FK"
+        tests:
+          - relationships:
+              to: ref('company_profiles_google_maps_final')
+              field: place_id
+  - name: company_profiles_posts_final
+    columns:
+      - name: place_id
+        description: "FK"
+        tests:
+          - relationships:
+              to: ref('company_profiles_google_maps_final')
+              field: place_id
+  - name: company_profiles_working_hours_final
+    columns:
+      - name: place_id
+        description: "FK"
+        tests:
+          - relationships:
+              to: ref('company_profiles_google_maps_final')
+              field: place_id

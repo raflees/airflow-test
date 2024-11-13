@@ -7,6 +7,8 @@ from airflow.operators.bash import BashOperator
 from scripts.clever_main_pipeline import upload_to_postgres
 
 class DAGFactory:
+    ACCEPTED_DBT_COMMANDS = ('run', 'test')
+
     def __init__(self, dag: DAG):
         self.dag = dag
 
@@ -21,13 +23,22 @@ class DAGFactory:
         )
         return upload_to_postgres_task
     
-    def create_transform_task(self, task_id: str) -> BashOperator:
+    def create_dbt_task(self, task_id: str, dbt_command: str, selector: str) -> BashOperator:
+        self._validate_dbt_command(dbt_command)
+        self._validate_dbt_selector(selector)
         transform_task = BashOperator(
             task_id=task_id,
             dag=self.dag,
-            bash_command="""
+            bash_command=f"""
                 cd $AIRFLOW_HOME/dags/clever_transform &&
-                dbt deps &&
-                dbt run --selector main --target prod"""
+                dbt {dbt_command} --selector {selector} --target prod"""
         )
         return transform_task
+
+    def _validate_dbt_command(self, command: str):
+        if command not in self.ACCEPTED_DBT_COMMANDS:
+            raise ValueError(f"Expected dbt command one of {self.ACCEPTED_DBT_COMMANDS}, got {command}")
+    
+    def _validate_dbt_selector(self, selector: str):
+        if not selector:
+            raise ValueError(f"Expected a non-empty value for selector")

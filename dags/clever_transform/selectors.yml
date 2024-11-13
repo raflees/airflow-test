@@ -1,5 +1,5 @@
 selectors:
-  - name: main
+  - name: main_transform
     definition:
       union:
         - +company_profiles_google_maps
@@ -8,3 +8,7 @@ selectors:
         - +fmcsa_company_snapshot
         - +fmcsa_complaints
         - +fmcsa_safer_data
+  - name: publish
+    definition:
+      union:
+        - publish

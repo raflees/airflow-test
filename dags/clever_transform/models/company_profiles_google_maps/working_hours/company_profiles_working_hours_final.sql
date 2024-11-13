@@ -7,11 +7,11 @@
 
 SELECT
     place_id,
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday,
-    sunday
+    monday as monday_hours,
+    tuesday as tuesday_hours,
+    wednesday as wednesday_hours,
+    thursday as thursday_hours,
+    friday as friday_hours,
+    saturday as saturday_hours,
+    sunday as sunday_hours
 FROM {{ ref('company_profiles_working_hours_unnested') }}

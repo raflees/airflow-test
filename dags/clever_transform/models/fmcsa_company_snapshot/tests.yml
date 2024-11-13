@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: fmcsa_company_snapshot_final
+    columns:
+      - name: id
+        description: "PK"
+        tests:
+          - unique
+          - not_null
