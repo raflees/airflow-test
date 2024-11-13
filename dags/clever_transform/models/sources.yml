@@ -9,3 +9,7 @@ sources:
       - name: fmcsa_company_snapshot
       - name: fmcsa_complaints
       - name: fmcsa_companies
+  - name: analysis
+    schema: analysis
+    tables:
+      - name: reviews_sentiment_analysis

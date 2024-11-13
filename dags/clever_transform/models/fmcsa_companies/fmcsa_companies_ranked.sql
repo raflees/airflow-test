@@ -5,7 +5,7 @@ SELECT
 	RANK() OVER (
 		PARTITION BY complaint_year
 		ORDER BY SUM(complaint_count) ASC
-	) AS total_complaints_ranking_in_year,
+	) AS total_complaints_in_year_ranking,
 	CASE
 		WHEN complaint_year = MAX(complaint_year) OVER()
 			THEN TRUE
