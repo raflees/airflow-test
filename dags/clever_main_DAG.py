@@ -7,6 +7,7 @@ from airflow.operators.bash import BashOperator
 
 from scripts.dag_factory import DAGFactory
 
+
 default_args = {
     "owner": "rafael.lucena",
     "start_date": datetime(2024, 10, 1),
@@ -26,8 +27,9 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
     finish_task = EmptyOperator(task_id='Finish', dag=dag)
 
     factory = DAGFactory(dag)
+    sentiment_analysis_task = factory.create_vader_sentiment_analysis_task("review_sentiment_analysis")
     transform_task = factory.create_dbt_task("dbt_transform", "run", "main_transform")
-    test_task = factory.create_dbt_task("dbt_test", "test", "main_transform")
+    test_task = factory.create_dbt_task("dbt_test", "test", "main_transform_test")
     publish_task = factory.create_dbt_task("dbt_publish", "run", "publish")
 
     for file_name in datasets:
@@ -36,8 +38,9 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
             task_id=f"upload_to_postgres_{file_without_extension}",
             file_name=file_name)
         start_task.set_downstream(upload_task)    
-        upload_task.set_downstream(transform_task)
+        upload_task.set_downstream(sentiment_analysis_task)
     
+    sentiment_analysis_task.set_downstream(transform_task)
     transform_task.set_downstream(test_task)
     test_task.set_downstream(publish_task)
     publish_task.set_downstream(finish_task)

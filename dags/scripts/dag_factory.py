@@ -5,6 +5,7 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 
 from scripts.clever_main_pipeline import upload_to_postgres
+from scripts.vader_sentiment_analyst import VaderSentimentAnalyst
 
 class DAGFactory:
     ACCEPTED_DBT_COMMANDS = ('run', 'test')
@@ -42,3 +43,12 @@ class DAGFactory:
     def _validate_dbt_selector(self, selector: str):
         if not selector:
             raise ValueError(f"Expected a non-empty value for selector")
+    
+    def create_vader_sentiment_analysis_task(self, task_id: str):
+        review_sentiment_task = PythonOperator(
+            task_id=task_id,
+            python_callable=VaderSentimentAnalyst().sentiment_analysis,
+            dag=self.dag,
+            execution_timeout=timedelta(seconds=30),
+        )
+        return review_sentiment_task
