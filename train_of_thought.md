@@ -21,7 +21,7 @@ Airflow was not building correctly due to a couple bugs in the code.
 
 **Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. You guys may wanna delete any public records so what I did is not easily accessible by other candidates
 
-## Step 2: Changing the loaded schema to `raw` (PR #3)gi
+## Step 2: Changing the loaded schema to `raw` (PR #3)
 
 ### Reason
 
@@ -75,7 +75,7 @@ For simplicity, and since it's not part of the job requirements, the model was n
 
 - Changed some method signatures in `PostgresHelper` so it can accomodate the new use case
 
-## Create publish and test steps
+## Create publish and test steps (PR #7)
 
 ### Reason
 
@@ -88,3 +88,21 @@ We can consider the pipeline built up until this point as to be published data. 
 ### Refactoring
 
 - Changed the way we build dbt tasks in the DAG Factory to make it more generic
+
+## Make Sentiment Analysis incremental (PR #8)
+
+### Reason
+
+For cost and time savings it better to follow incremental approaches whenever possible. The Sentiment Analysis was a full replace process, so I turned it into an incremental one.
+
+### Rationale
+
+Two things were changed:
+1. Retrive not analyzed reviews from the table `transform.customer_reviews_google`
+2. Upload analyzed data with an `append` method
+
+### Refactoring
+
+- Change the upload method of `PostgresHelper` to accept a `method` parameter, which should be `append` or `replace`
+- Encapsulate the Sentiment Analysis logic in a class
+- Refactored the inspecting functions from `PostgresHelper` to use the class `sqlalchemy.engine.reflection.Inspector`
