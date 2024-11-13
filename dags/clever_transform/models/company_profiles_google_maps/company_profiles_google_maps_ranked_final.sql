@@ -1,18 +1,11 @@
-WITH BASE AS (
-    SELECT place_id FROM {{ ref('company_profiles_google_maps_typed') }}
-), POST_COUNT AS (
-	SELECT
-		place_id,
-		EXTRACT(YEAR FROM posted_at) AS year,
-		COUNT(*) AS total_posts
-	FROM {{ ref('company_profiles_posts_final') }}
-	GROUP BY 1, 2
-), REVIEWS AS (
+{{ config(
+	tags=["ranking"]
+) }}
+
+WITH REVIEWS AS (
 	SELECT
 		place_id,
 		EXTRACT(YEAR FROM review_timestamp) AS year,
-		COUNT(*) AS number_of_reviews,
-		AVG(review_rating) AS average_review_rating,
         CASE
             WHEN COUNT(sent.strongest_sentiment) = 0 THEN NULL  -- Division protection
         ELSE
@@ -64,14 +57,7 @@ SELECT
 		PARTITION BY year
 		ORDER BY COALESCE(total_posts, 0) DESC
 	) AS total_posts_in_year_ranking,
-    CASE
-		WHEN year = MAX(year) OVER()
-			THEN TRUE
-		ELSE
-			FALSE
-	END AS is_latest_ranking
-FROM BASE
+    is_latest_year
+FROM {{ ref('company_profiles_google_maps_metrics') }}
 LEFT JOIN REVIEWS
-    USING (place_id)
-LEFT JOIN POST_COUNT
-	USING (place_id, year)
+    USING (place_id, year)

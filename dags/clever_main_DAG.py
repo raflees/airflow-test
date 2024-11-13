@@ -29,7 +29,8 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
     factory = DAGFactory(dag)
     sentiment_analysis_task = factory.create_vader_sentiment_analysis_task("review_sentiment_analysis")
     transform_task = factory.create_dbt_task("dbt_transform", "run", "main_transform")
-    test_task = factory.create_dbt_task("dbt_test", "test", "main_transform_test")
+    test_task = factory.create_dbt_task("dbt_test", "test", "main_transform")
+    ranking_task = factory.create_dbt_task("dbt_ranking", "run", "ranking")
     publish_task = factory.create_dbt_task("dbt_publish", "run", "publish")
 
     for file_name in datasets:
@@ -42,5 +43,6 @@ with DAG("clever_main_DAG", default_args=default_args, catchup=False, schedule_i
     
     sentiment_analysis_task.set_downstream(transform_task)
     transform_task.set_downstream(test_task)
-    test_task.set_downstream(publish_task)
+    test_task.set_downstream(ranking_task)
+    ranking_task.set_downstream(publish_task)
     publish_task.set_downstream(finish_task)
