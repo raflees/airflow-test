@@ -1,6 +1,6 @@
 {{ config(
     alias='company_profiles_other_hours',
-    pre_hook='CREATE EXTENSION IF NOT EXISTS tablefunc WITH CASCADE;',
+    pre_hook='CREATE SCHEMA IF NOT EXISTS public; CREATE EXTENSION IF NOT EXISTS tablefunc WITH CASCADE;',
     indexes=[
         {'columns': ['place_id', 'hours_type'], 'type': 'btree'}
     ]

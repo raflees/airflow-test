@@ -18,7 +18,6 @@ SELECT
     logo_url,
     longitude,
     name,
-    negative_reviews_pct,
     number_of_reviews,
     order_links,
     owner_id,
@@ -31,7 +30,6 @@ SELECT
     place_location_link,
     plus_code,
     popular_times,
-    positive_reviews_pct,
     postal_code,
     rating,
     review_count,
@@ -47,9 +45,5 @@ SELECT
     total_posts,
     type,
     us_state,
-    verified,
-    number_of_reviews_ranking,
-    average_review_rating_ranking,
-    positive_reviews_pct_ranking,
-    negative_reviews_pct_ranking
+    verified
 FROM {{ ref('company_profiles_google_maps_final') }}

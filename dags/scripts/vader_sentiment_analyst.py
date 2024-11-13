@@ -3,7 +3,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 from scripts.postgres_helper import PostgresHelper
 
-
 class VaderSentimentAnalyst:
     def __init__(self):
         self.model = SentimentIntensityAnalyzer()
@@ -71,15 +70,15 @@ class VaderSentimentAnalyst:
         return self.helper.table_exists(self.analysis_schema, self.analysis_table)
 
     def _unanalysed_reviews_query_incremental(self):
-        return """select id, author_id, place_id, review_text
-                from transform.customer_reviews_google reviews
+        return """select place_id, review_id, review_text
+                from raw.customer_reviews_google reviews
                 where not exists (
                     select 1 from analysis.reviews_sentiment_analysis sa
                     where reviews.id = sa.review_id
                 )"""
 
     def _all_reviews_query(self):
-        return 'select id, review_text from transform.customer_reviews_google'
+        return 'select place_id, review_id, review_text from raw.customer_reviews_google'
 
     def _analyze_text(self, text: str) -> dict:
         if not text:

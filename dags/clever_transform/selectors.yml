@@ -2,12 +2,21 @@ selectors:
   - name: main_transform
     definition:
       union:
-        - +company_profiles_google_maps
-        - +customer_reviews_google
-        - +fmcsa_companies
-        - +fmcsa_company_snapshot
-        - +fmcsa_complaints
-        - +fmcsa_safer_data
+        - union:
+          - +company_profiles_features_final
+          - +company_profiles_other_hours_final
+          - +company_profiles_posts_final
+          - +company_profiles_working_hours_final
+          - +company_profiles_google_maps_final
+          - +customer_reviews_google_final
+          - +fmcsa_companies_final
+          - +fmcsa_company_snapshot_final
+          - +fmcsa_complaints_final
+          - +fmcsa_safer_data_final
+        - exclude:
+           - 'tag:ranking'
+  - name: ranking
+    definition: '+tag:ranking'
   - name: publish
     definition:
       union:

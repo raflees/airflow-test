@@ -9,7 +9,6 @@ SELECT
     name,
     state,
     total_complaints_latest_year,
-    total_complaints_ranking_latest_year,
     updated_at,
     updated_by
 FROM {{ ref('fmcsa_companies_final') }}
