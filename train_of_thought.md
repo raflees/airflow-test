@@ -121,4 +121,13 @@ Ranks were created globally (using the whole datasets). If necessary, one can ap
     - There are discrepancies between the number of complaints in `fmcsa_companies` and `fmcsa_complaints`. Like only centain complaint categories are account for in the former. For the ranking, I've used `fmcsa_complaints` as the number is always equal or higher.
     - Given the discrepancy, I've removed complaint count fields from `fmcsa_companies`, to not cause confusion
     - So to not pollute the table, only the ranking from the latest year is published.
-    
+- Companies in the Google dataset had more information that could be ranked:
+    - Most posts
+    - Most reviews
+    - Most positive reviews percentage (per sentiment analysis)
+    - Most negative reviews percentage (per sentiment analysis)
+    - Best rated
+
+### Refactoring
+
+- Sentiment Analysis added a field, `stringest_sentiment`, to table as to aid in ranking most negative and positve reviews
