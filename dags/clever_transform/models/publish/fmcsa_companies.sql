@@ -8,9 +8,8 @@ SELECT
     location,
     name,
     state,
-    total_complaints_2021,
-    total_complaints_2022,
-    total_complaints_2023,
+    total_complaints_latest_year,
+    total_complaints_ranking_latest_year,
     updated_at,
     updated_by
 FROM {{ ref('fmcsa_companies_final') }}

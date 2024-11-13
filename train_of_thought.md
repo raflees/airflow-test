@@ -106,3 +106,17 @@ Two things were changed:
 - Change the upload method of `PostgresHelper` to accept a `method` parameter, which should be `append` or `replace`
 - Encapsulate the Sentiment Analysis logic in a class
 - Refactored the inspecting functions from `PostgresHelper` to use the class `sqlalchemy.engine.reflection.Inspector`
+
+## Create company rankings (PR #9)
+
+### Reason
+
+Data Analysts need to be able to rank companies
+
+### Rationale
+
+Ranks were created globally (using the whole datasets). If necessary, one can apply filters and order results by the global ranking.
+
+- Ranked FMCSA companies by the number of complaints, being the 1st companies the one with the least complaints. The ranking was yearly, so I created a `is_latest_ranking` fields which is `TRUE` only for the latest year (in this case, 2023)
+    - There are discrepancies between the number of complaints in `fmcsa_companies` and `fmcsa_complaints`. Like only centain complaint categories are account for in the former. For the ranking, I've used `fmcsa_complaints` as the number is always equal or higher.
+    - Given the discrepancy, I've removed complaint count fields from `fmcsa_companies`, to not cause confusion
