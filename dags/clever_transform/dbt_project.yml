@@ -19,5 +19,4 @@ models:
     +materialized: table
     +schema: transform
     publish:
-      +materialized: view
       +schema: public
