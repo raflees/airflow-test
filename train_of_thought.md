@@ -131,3 +131,26 @@ Ranks were created globally (using the whole datasets). If necessary, one can ap
 ### Refactoring
 
 - Sentiment Analysis added a field, `stringest_sentiment`, to table as to aid in ranking most negative and positve reviews
+
+## Prepare system to be reproductible
+
+### Reason
+
+In order others could spin up the environment and successfully run DAGs, some adjustments had to be made
+
+### Rationale
+
+I notice I had created a cyclic dependency between the transform/ranking logic and the Sentiment Analysis DAG. The SA process would pull from the `tranform` schema and write to the `analysis` schema. The ranking models would read from both, but they were part of `transform` themselves. One of two actions were required:
+
+1. Make SA read from `raw`, instead of transform
+2. Split the ranking models from the mais transform, so they could be run separately, after SA
+
+I did both. I proceeded to drop all database schemas and re-run the DAG. It passed.
+
+## Future improvements
+- Add unit tests to the DAG scripts
+- Add metadata fields to the tables. An ingest / transform timestamp would enable incremental pulls from the data analysts
+- Add observability to the pipeline
+    - Row count metrics
+    - Query checks
+- Employ other Sentiment Analyses techniques
