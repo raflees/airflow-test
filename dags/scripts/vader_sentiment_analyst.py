@@ -20,6 +20,8 @@ class VaderSentimentAnalyst:
         )
 
         sa_results = pd.json_normalize(series_sentiment_analysis)
+        print(f"Analysed {sa_results.shape[0]} reviews")
+
         df_join = df.join(sa_results)
         df_join.rename(columns={
             "neg": "negative_score",
@@ -33,10 +35,11 @@ class VaderSentimentAnalyst:
 
         df_join = df_join[["review_id", "negative_score", "neutral_score", "positive_score", "sentiment_polarity"]]
         self.helper.create_schema_if_not_exists("analysis")
-        self.helper.upload_append_table(
+        self.helper.upload_table(
             df=df_join,
             schema=self.analysis_schema,
-            table_name=self.analysis_table)
+            table_name=self.analysis_table,
+            method="append")
 
     def _load_unanalyzed_reviews(self) -> pd.DataFrame:
         query = self._get_unanalyzed_reviews_query()
@@ -56,7 +59,7 @@ class VaderSentimentAnalyst:
     def _unanalysed_reviews_query_incremental(self):
         return """select id, author_id, place_id, review_text
                 from transform.customer_reviews_google reviews
-                where exists (
+                where not exists (
                     select 1 from analysis.reviews_sentiment_analysis sa
                     where reviews.id = sa.review_id
                 )"""

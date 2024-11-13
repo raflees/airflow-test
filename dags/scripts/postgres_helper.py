@@ -32,6 +32,6 @@ class PostgresHelper:
     def table_exists(self, schema: str, table_name: str) -> bool:
         return self.inspector.has_table(table_name, schema)
 
-    def upload_append_table(self, df: pd.DataFrame, table_name: str, schema: str="raw"):
+    def upload_table(self, df: pd.DataFrame, schema: str, table_name: str, method: str):
         # Upload DataFrame to PostgreSQL
-        df.to_sql(f'{table_name}',  self.engine, schema, index=False, if_exists='replace')
+        df.to_sql(f'{table_name}',  self.engine, schema, index=False, if_exists=method)

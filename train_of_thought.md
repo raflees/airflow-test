@@ -21,7 +21,7 @@ Airflow was not building correctly due to a couple bugs in the code.
 
 **Note**: Made a mistake when creating a Pull Request. It went to the original repo,not the forked. You guys may wanna delete any public records so what I did is not easily accessible by other candidates
 
-## Step 2: Changing the loaded schema to `raw` (PR #3)gi
+## Step 2: Changing the loaded schema to `raw` (PR #3)
 
 ### Reason
 
@@ -75,7 +75,7 @@ For simplicity, and since it's not part of the job requirements, the model was n
 
 - Changed some method signatures in `PostgresHelper` so it can accomodate the new use case
 
-## Create publish and test steps
+## Create publish and test steps (PR #7)
 
 ### Reason
 
